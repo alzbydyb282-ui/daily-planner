@@ -34,8 +34,9 @@ function generateDates(): Date[] {
   return dates;
 }
 
+// Indexed by getDay(): 0=Sunday, 1=Monday, … 6=Saturday
 const DAY_NAMES_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const DAY_NAMES_AR = ['أحد', 'اثن', 'ثلا', 'أرب', 'خمي', 'جمع', 'سبت'];
+const DAY_NAMES_AR = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 const MONTH_NAMES_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTH_NAMES_AR = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
 
@@ -67,7 +68,7 @@ export default function DateStrip({ selectedDate, onSelectDate }: DateStripProps
   const monthName = (() => {
     const selDate = dates.find((d) => formatDateKey(d) === selectedDate) ?? today;
     return language === 'ar'
-      ? MONTH_NAMES_AR[selDate.getMonth()]
+      ? `${MONTH_NAMES_AR[selDate.getMonth()]} ${selDate.getFullYear()}`
       : `${MONTH_NAMES_EN[selDate.getMonth()]} ${selDate.getFullYear()}`;
   })();
 
@@ -109,8 +110,11 @@ export default function DateStrip({ selectedDate, onSelectDate }: DateStripProps
                       ? colors.primary
                       : colors.mutedForeground,
                     fontFamily: 'Inter_500Medium',
+                    fontSize: language === 'ar' ? 9 : 11,
                   },
                 ]}
+                numberOfLines={1}
+                adjustsFontSizeToFit
               >
                 {dayNames[d.getDay()]}
               </Text>
@@ -145,7 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginBottom: 8,
     marginHorizontal: 4,
-    textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   strip: {

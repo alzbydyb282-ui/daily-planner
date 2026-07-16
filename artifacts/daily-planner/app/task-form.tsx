@@ -45,10 +45,11 @@ function offsetDate(dateStr: string, days: number): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
-function formatDisplayDate(dateStr: string): string {
+function formatDisplayDate(dateStr: string, language: string): string {
   const [y, m, d] = dateStr.split('-').map(Number);
   const date = new Date(y, m - 1, d);
-  return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const locale = language === 'ar' ? 'ar-SA' : 'en-US';
+  return date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
 export default function TaskFormScreen() {
@@ -219,7 +220,7 @@ export default function TaskFormScreen() {
               <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={20} color={colors.foreground} />
             </TouchableOpacity>
             <Text style={[styles.dateText, { color: colors.foreground, fontFamily: 'Inter_600SemiBold' }]}>
-              {formatDisplayDate(date)}
+              {formatDisplayDate(date, language)}
             </Text>
             <TouchableOpacity onPress={() => setDate(offsetDate(date, isRTL ? -1 : 1))}>
               <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={colors.foreground} />
