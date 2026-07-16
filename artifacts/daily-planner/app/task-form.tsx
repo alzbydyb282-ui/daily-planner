@@ -173,7 +173,6 @@ export default function TaskFormScreen() {
               },
             ]}
             autoFocus
-            writingDirection={isRTL ? 'rtl' : 'ltr'}
           />
           {titleError && (
             <Text style={[styles.errorText, { color: colors.destructive, fontFamily: 'Inter_400Regular' }]}>
@@ -206,7 +205,6 @@ export default function TaskFormScreen() {
                 fontFamily: 'Inter_400Regular',
               },
             ]}
-            writingDirection={isRTL ? 'rtl' : 'ltr'}
           />
         </View>
 

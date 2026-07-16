@@ -15,7 +15,7 @@ function NativeTabLayout() {
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
-        <Icon sf={{ default: 'calendar', selected: 'calendar.fill' }} />
+        <Icon sf={{ default: 'calendar', selected: 'calendar' as any }} />
         <Label>{t.today}</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="tasks">
