@@ -1,36 +1,43 @@
-# [Project name]
+# My Daily Planner / مخططي اليومي
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A bilingual (Arabic/English) personal daily planner mobile app built with Expo. Users can create daily schedules, add/edit/delete tasks, track completions, and receive local reminders.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/daily-planner run dev` — run the Expo dev server
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Expo SDK 54 + Expo Router (file-based routing)
+- React Native + TypeScript
+- AsyncStorage for local persistence (no backend)
+- expo-notifications for local scheduled reminders
+- react-native-reanimated for animations
+- Inter font (Google Fonts)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/daily-planner/` — the Expo mobile app
+- `artifacts/daily-planner/app/(tabs)/` — main tabs: Today, Tasks, Settings
+- `artifacts/daily-planner/app/task-form.tsx` — Add/Edit task modal
+- `artifacts/daily-planner/context/TasksContext.tsx` — task CRUD + AsyncStorage + notifications
+- `artifacts/daily-planner/context/LanguageContext.tsx` — Arabic/English toggle, translations, RTL
+- `artifacts/daily-planner/constants/colors.ts` — indigo/dark theme tokens
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Frontend-only: all data stored with AsyncStorage, no backend needed
+- RTL via `I18nManager.forceRTL()` + `reloadAppAsync()` — language switch triggers app reload for true RTL
+- expo-notifications pinned to ~0.32.17 (Expo SDK 54 compatible version)
+- UUID generation uses `Date.now() + Math.random().toString(36)` pattern (no uuid package — crashes on iOS)
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Today tab**: Date strip showing ±2 weeks, tasks for selected day sorted by time, stats bar
+- **Tasks tab**: All tasks grouped by date in section list
+- **Settings tab**: Language toggle (Arabic/English), notifications permission, about
+- **Task form modal**: Title, description, date navigator, time spinner (hour/minute), category pills (Work/Personal/Health/Other), priority pills (Low/Medium/High), reminder toggle
 
 ## User preferences
 
@@ -38,8 +45,11 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- expo-notifications requires ~0.32.17 for Expo SDK 54 (not the latest 57.x)
+- AsyncStorage is already pre-installed as a devDependency at version 2.2.0
+- Switching language reloads the app via `reloadAppAsync()` — this is intentional for RTL to take effect
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- See the `pnpm-workspace` skill for workspace structure
+- See the `expo` skill for Expo-specific guidelines
