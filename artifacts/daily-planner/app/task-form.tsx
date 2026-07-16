@@ -129,7 +129,7 @@ export default function TaskFormScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Nav bar */}
-      <View style={[styles.navbar, { paddingTop: topPad + 8, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+      <View style={[styles.navbar, { paddingTop: topPad + 8, backgroundColor: colors.background, borderBottomColor: colors.border, flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.navBtn}>
           <Ionicons name="close" size={24} color={colors.foreground} />
         </TouchableOpacity>
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
   saveBtnText: { fontSize: 15 },
   form: { paddingHorizontal: 20, paddingTop: 20, gap: 4 },
   fieldGroup: { marginBottom: 20 },
-  fieldLabel: { fontSize: 13, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8 },
+  fieldLabel: { fontSize: 13, letterSpacing: 0.5, marginBottom: 8 },
   input: { borderWidth: 1, padding: 14, fontSize: 16, minHeight: 48 },
   textArea: { minHeight: 90, textAlignVertical: 'top' },
   errorText: { fontSize: 12, marginTop: 4 },

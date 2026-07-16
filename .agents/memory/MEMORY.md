@@ -1,0 +1,2 @@
+- [RTL initialization fix](rtl-init.md) — initialize language state from I18nManager.isRTL to prevent LTR→RTL flash on startup
+- [Arabic textTransform](arabic-texttransform.md) — never use textTransform:'uppercase' on Arabic text; it garbles the script

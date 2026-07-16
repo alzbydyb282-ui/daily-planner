@@ -94,13 +94,13 @@ export default function SettingsScreen() {
         </View>
 
         {/* About */}
-        <SectionHeader title="About" isRTL={isRTL} color={colors.mutedForeground} />
+        <SectionHeader title={t.about} isRTL={isRTL} color={colors.mutedForeground} />
         <View style={[styles.card, { backgroundColor: colors.card, borderRadius: colors.radius + 4 }]}>
           <View style={[styles.row, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
             <View style={[styles.appIconSmall, { backgroundColor: colors.primary, borderRadius: colors.radius }]}>
               <Ionicons name="calendar" size={20} color="#fff" />
             </View>
-            <View style={[styles.rowContent, { alignItems: isRTL ? 'flex-end' : 'flex-start', marginLeft: 12 }]}>
+            <View style={[styles.rowContent, { alignItems: isRTL ? 'flex-end' : 'flex-start', marginLeft: isRTL ? 0 : 12, marginRight: isRTL ? 12 : 0 }]}>
               <Text style={[styles.rowLabel, { color: colors.foreground, fontFamily: 'Inter_600SemiBold' }]}>
                 {t.appName}
               </Text>
@@ -126,7 +126,6 @@ function SectionHeader({ title, isRTL, color }: { title: string; isRTL: boolean;
 const sectionStyles = StyleSheet.create({
   header: {
     fontSize: 12,
-    textTransform: 'uppercase',
     letterSpacing: 0.8,
     marginBottom: 8,
     marginTop: 24,

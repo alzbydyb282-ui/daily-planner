@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 8,
   },
-  sectionTitle: { fontSize: 13, textTransform: 'uppercase', letterSpacing: 0.5 },
+  sectionTitle: { fontSize: 13, letterSpacing: 0.5 },
   listContent: { paddingTop: 4 },
 });

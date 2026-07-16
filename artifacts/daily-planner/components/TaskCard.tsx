@@ -34,7 +34,7 @@ interface TaskCardProps {
 
 export default function TaskCard({ task, onPress }: TaskCardProps) {
   const colors = useColors();
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const { toggleComplete, deleteTask } = useTasks();
 
   const scale = useSharedValue(1);
@@ -142,7 +142,7 @@ export default function TaskCard({ task, onPress }: TaskCardProps) {
             <View style={[styles.metaRow, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
               <Ionicons name="time-outline" size={12} color={colors.mutedForeground} />
               <Text style={[styles.metaText, { color: colors.mutedForeground, fontFamily: 'Inter_400Regular' }]}>
-                {' '}{formatTime(task.time)}
+                {' '}{formatTime(task.time, language)}
               </Text>
               {task.reminderEnabled && (
                 <Ionicons
@@ -170,11 +170,16 @@ export default function TaskCard({ task, onPress }: TaskCardProps) {
   );
 }
 
-function formatTime(time: string): string {
+function formatTime(time: string, language: string): string {
   const [h, m] = time.split(':').map(Number);
-  const ampm = h >= 12 ? 'PM' : 'AM';
   const hour = h % 12 === 0 ? 12 : h % 12;
-  return `${hour}:${String(m).padStart(2, '0')} ${ampm}`;
+  const mins = String(m).padStart(2, '0');
+  if (language === 'ar') {
+    const ampm = h >= 12 ? 'م' : 'ص';
+    return `${hour}:${mins} ${ampm}`;
+  }
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  return `${hour}:${mins} ${ampm}`;
 }
 
 function getPriorityColor(priority: string): string {

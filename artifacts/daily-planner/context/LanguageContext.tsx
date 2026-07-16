@@ -59,6 +59,7 @@ type Translations = {
   minute: string;
   am: string;
   pm: string;
+  about: string;
 };
 
 const en: Translations = {
@@ -115,6 +116,7 @@ const en: Translations = {
   minute: 'Minute',
   am: 'AM',
   pm: 'PM',
+  about: 'About',
 };
 
 const ar: Translations = {
@@ -171,6 +173,7 @@ const ar: Translations = {
   minute: 'الدقيقة',
   am: 'ص',
   pm: 'م',
+  about: 'حول التطبيق',
 };
 
 const TRANSLATIONS: Record<Language, Translations> = { en, ar };
@@ -190,12 +193,19 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
+  // Initialize from I18nManager.isRTL which is persisted across restarts —
+  // this prevents a LTR→RTL layout flash before AsyncStorage resolves.
+  const [language, setLanguageState] = useState<Language>(I18nManager.isRTL ? 'ar' : 'en');
 
   useEffect(() => {
     AsyncStorage.getItem('language').then((saved) => {
       if (saved === 'ar' || saved === 'en') {
         setLanguageState(saved);
+        // Keep I18nManager in sync in case it drifted (e.g. first install)
+        const shouldBeRTL = saved === 'ar';
+        if (shouldBeRTL !== I18nManager.isRTL) {
+          I18nManager.forceRTL(shouldBeRTL);
+        }
       }
     });
   }, []);

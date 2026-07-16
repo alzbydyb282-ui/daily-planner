@@ -17,10 +17,10 @@ export default function EmptyState({ icon, title, description, isRTL }: EmptySta
       <View style={[styles.iconWrap, { backgroundColor: colors.muted, borderRadius: colors.radius + 20 }]}>
         <Ionicons name={icon} size={40} color={colors.mutedForeground} />
       </View>
-      <Text style={[styles.title, { color: colors.foreground, textAlign: isRTL ? 'right' : 'center', fontFamily: 'Inter_600SemiBold' }]}>
+      <Text style={[styles.title, { color: colors.foreground, textAlign: 'center', fontFamily: 'Inter_600SemiBold' }]}>
         {title}
       </Text>
-      <Text style={[styles.desc, { color: colors.mutedForeground, textAlign: isRTL ? 'right' : 'center', fontFamily: 'Inter_400Regular' }]}>
+      <Text style={[styles.desc, { color: colors.mutedForeground, textAlign: 'center', fontFamily: 'Inter_400Regular' }]}>
         {description}
       </Text>
     </View>
